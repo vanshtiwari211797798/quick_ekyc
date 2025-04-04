@@ -1,7 +1,6 @@
 <?php
 include('config.php');
-// Num -> UP5320230004442
-// DOB - 23-07-1996
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,13 +1,7 @@
 <?php
 session_start();
 include('config.php');
-// include("includes/database.php");
-// $minusRs = false;
-// $userEmail = isset($_SESSION['emailid']) ? $_SESSION['emailid'] : '';
-// if($minusRs){
-//     $sql="UPDATE usertable SET walletamount=walletamount-10 WHERE emailid = '$userEmail'";
-//     mysqli_query($conn,$sql);
-// }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,7 +135,7 @@ include('config.php');
 
 <body>
     <div class="container">
-        <h2>UDYOG AADHAR Verification</h2>
+        <h2>UDYOG Verification</h2>
         <div class="input-group">
             <input
                 type="text"

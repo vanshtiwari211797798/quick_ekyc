@@ -1,6 +1,5 @@
 <?php
 include('config.php');
-// dharmendra93100@okicici
 ?>
 <!DOCTYPE html>
 <html lang="en">

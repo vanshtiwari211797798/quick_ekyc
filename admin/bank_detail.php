@@ -187,6 +187,7 @@ include('config.php');
                             html: `
                                <p><strong>Account Number:</strong> ${accountNumber}</p>
                           <p><strong>Name:</strong> ${data.data.full_name}</p>
+                           <p><strong>Account Status:</strong> ${data.data.account_exists ? "Active" : 'Not -Active'}</p>
                         `,
                             icon: "success",
                             width: 500
