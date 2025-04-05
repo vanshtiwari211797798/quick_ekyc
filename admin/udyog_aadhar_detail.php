@@ -153,6 +153,13 @@ include('config.php');
 
     <script>
         document.getElementById("verifyButton").addEventListener("click", function() {
+            <?php
+
+            // include("includes/database.php");
+            $emailid = isset($_SESSION['emailid']) ? $_SESSION['emailid'] : '';
+            $sql = "UPDATE usertable SET walletamount=walletamount-10 WHERE emailid ='$emailid'";
+            mysqli_query($conn, $sql);
+            ?>
             let udyogAadharNumber = document.getElementById("udyogAadharNumber").value.trim();
             if (udyogAadharNumber === "") {
                 Swal.fire("Error", "Please enter a Udyog Aadhar Number", "error");

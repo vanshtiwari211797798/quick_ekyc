@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
             --background: #f8fafc;
             --text: #1e293b;
             --card-bg: #ffffff;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --radius: 12px;
         }
 
@@ -97,7 +98,7 @@
             .container {
                 padding: 1.5rem;
             }
-            
+
             h2 {
                 font-size: 1.25rem;
                 padding: 0 0.5rem;
@@ -120,32 +121,41 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>RC Verification</h2>
         <div class="input-group">
-            <input 
-                type="text" 
-                id="rc_number" 
+            <input
+                type="text"
+                id="rc_number"
                 placeholder="Enter RC number"
                 autocomplete="off"
                 maxlength="100"
-                required=""
-            >
+                required="">
         </div>
-        
-          <button onclick="verifyRC()">
+
+        <button onclick="verifyRC()">
             Verify Identity
             <span class="button-loader hidden"></span>
         </button>
     </div>
-    
+
     <script>
         function verifyRC() {
+            <?php
+
+            // include("includes/database.php");
+            $emailid = isset($_SESSION['emailid']) ? $_SESSION['emailid'] : '';
+            $sql = "UPDATE usertable SET walletamount=walletamount-10 WHERE emailid ='$emailid'";
+            mysqli_query($conn, $sql);
+            ?>
             let rcNumber = document.getElementById("rc_number").value.trim();
             if (rcNumber === "") {
                 Swal.fire("Error", "Please enter an RC number!", "error");
@@ -153,24 +163,28 @@
             }
 
             fetch("verify_rc.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id_number: rcNumber })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("API Response:", data); // ✅ Debugging
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id_number: rcNumber
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("API Response:", data); // ✅ Debugging
 
-                if (data.error) {
-                    Swal.fire("Error", data.error, "error");
-                    return;
-                }
+                    if (data.error) {
+                        Swal.fire("Error", data.error, "error");
+                        return;
+                    }
 
 
-                let details = data.data;
-                Swal.fire({
-                    title: "RC Verified",
-                    html: `
+                    let details = data.data;
+                    Swal.fire({
+                        title: "RC Verified",
+                        html: `
                         <b>Owner:</b> ${details.owner_name || "N/A"} <br>
                         <b>Father Name:</b> ${details.father_name || "N/A"} <br>
                         <b>Vehicle Model:</b> ${details.maker_model || "N/A"} <br>
@@ -184,14 +198,15 @@
                         <b>Permanent Address:</b> ${details.permanent_address || "N/A"} <br>
                         <b>Insurance Valid Upto:</b> ${details.insurance_upto || "N/A"} <br>
                     `,
-                    icon: "success"
+                        icon: "success"
+                    });
+                })
+                .catch(error => {
+                    console.error("Fetch Error:", error);
+                    Swal.fire("Error", "Server Error! Please try again later.", "error");
                 });
-            })
-            .catch(error => {
-                console.error("Fetch Error:", error);
-                Swal.fire("Error", "Server Error! Please try again later.", "error");
-            });
         }
     </script>
 </body>
+
 </html>

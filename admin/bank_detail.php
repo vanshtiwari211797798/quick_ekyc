@@ -1,7 +1,10 @@
 <?php
+session_start();
 include('config.php');
-
+// print_r($_SESSION);
+// die();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -158,6 +161,13 @@ include('config.php');
 
     <script>
         document.getElementById("verifyButton").addEventListener("click", function() {
+            <?php
+
+            // include("includes/database.php");
+            $emailid = isset($_SESSION['emailid']) ? $_SESSION['emailid'] : '';
+            $sql = "UPDATE usertable SET walletamount=walletamount-10 WHERE emailid ='$emailid'";
+            mysqli_query($conn, $sql);
+            ?>
             let accountNumber = document.getElementById("accountNumber").value.trim();
             let ifscCode = document.getElementById("ifscCode").value.trim();
             if (accountNumber === "") {
@@ -178,10 +188,13 @@ include('config.php');
                         ifsc: ifscCode
                     })
                 })
+
                 .then(response => response.json())
                 .then(data => {
                     console.log("API Response:", data); // ✅ Debugging
+
                     if (data.data) {
+
                         Swal.fire({
                             title: "Bank Details",
                             html: `

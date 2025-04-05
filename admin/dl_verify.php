@@ -148,6 +148,13 @@ include('config.php');
 
     <script>
         function verifyDL() {
+            <?php
+
+            // include("includes/database.php");
+            $emailid = isset($_SESSION['emailid']) ? $_SESSION['emailid'] : '';
+            $sql = "UPDATE usertable SET walletamount=walletamount-10 WHERE emailid ='$emailid'";
+            mysqli_query($conn, $sql);
+            ?>
             let dlNumber = document.getElementById("dl_number").value.trim();
             let dob = document.getElementById("dob").value.trim();
             let loader = document.getElementById("loader");

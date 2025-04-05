@@ -151,6 +151,13 @@ include('config.php');
 
     <script>
         document.getElementById("verifyButton").addEventListener("click", function() {
+            <?php
+
+            // include("includes/database.php");
+            $emailid = isset($_SESSION['emailid']) ? $_SESSION['emailid'] : '';
+            $sql = "UPDATE usertable SET walletamount=walletamount-10 WHERE emailid ='$emailid'";
+            mysqli_query($conn, $sql);
+            ?>
             let upiId = document.getElementById("upiId").value.trim();
             if (upiId === "") {
                 Swal.fire("Error", "Please enter a Account Number", "error");
